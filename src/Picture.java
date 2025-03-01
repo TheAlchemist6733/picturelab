@@ -89,7 +89,19 @@ public class Picture extends SimplePicture
 	flip all the colors:  if color had red = 30, green = 100, blue = 200
 	negated color red = 225, green= 155, blue = 55  */
 	public void negate() {
-		
+		Pixel[][] pixels = this.getPixels2D();
+
+		// Pixel[][] pixels = this.getPixels2D();     
+		Pixel pixel = null;     
+		for (int row = 0; row < pixels.length; row++)     
+		{       for (int col = 0; col < pixels[0].length; col++)       
+			{        
+					pixel = pixels[row][col];       
+		 			pixel.setRed(255-pixel.getRed());         
+		 			pixel.setGreen(255-pixel.getGreen());   
+					pixel.setBlue(255-pixel.getBlue());    
+			}     
+		}  
 		
 	}
 	
@@ -99,6 +111,20 @@ public class Picture extends SimplePicture
 	*/
 	public void grayScale() {
 		
+		Pixel[][] pixels = this.getPixels2D();
+
+		// Pixel[][] pixels = this.getPixels2D();     
+		Pixel pixel = null;     
+		for (int row = 0; row < pixels.length; row++)     
+		{       for (int col = 0; col < pixels[0].length; col++)       
+			{        
+					pixel = pixels[row][col];       
+					int average = (pixel.getRed() + pixel.getBlue() + pixel.getGreen())/3;
+		 			pixel.setRed(average);         
+		 			pixel.setGreen(average);   
+					pixel.setBlue(average);    
+			}     
+		}  
 	}
 
   /** pixelates an image
@@ -124,7 +150,114 @@ public class Picture extends SimplePicture
 			}     
 		}  
 	}
-	
+	public void setRedToHalfValueInTopHalf()   
+	{     
+
+		 Pixel[][] pixels = this.getPixels2D();
+
+		// Pixel[][] pixels = this.getPixels2D();     
+		Pixel pixel = null;     
+		for (int row = 0; row < pixels.length; row++)     
+		{       for (int col = 0; col < pixels[0].length; col++)       
+			{        
+								pixel = pixels[row][col];         
+		 						if (row <= pixels.length/2){
+									pixel.setRed(pixel.getRed()/2); 
+								}      
+			}     
+		}  
+	}
+	public void clearBlueOverValue(int i)   
+	{     
+
+		 Pixel[][] pixels = this.getPixels2D();
+
+		// Pixel[][] pixels = this.getPixels2D();     
+		Pixel pixel = null;     
+		for (int row = 0; row < pixels.length; row++)     
+		{       for (int col = 0; col < pixels[0].length; col++)       
+			{        
+								pixel = pixels[row][col];         
+		 						if (pixel.getBlue() > i){
+									pixel.setBlue(0); 
+								}      
+			}     
+		}  
+	}
+	public int getCountRedOverValue(int i)   
+	{     
+
+		 Pixel[][] pixels = this.getPixels2D();
+
+		// Pixel[][] pixels = this.getPixels2D();     
+		Pixel pixel = null;    
+		int coutn = 0; 
+		for (int row = 0; row < pixels.length; row++)     
+		{       for (int col = 0; col < pixels[0].length; col++)       
+			{        
+								pixel = pixels[row][col];   
+								if (pixel.getRed() > i){
+									coutn += 1;
+								} 
+							}			
+		}  
+		return coutn;
+	}
+	public String getAverageForColumn(int i)   
+	{     
+
+		 Pixel[][] pixels = this.getPixels2D();
+
+		// Pixel[][] pixels = this.getPixels2D();     
+		Pixel pixel = null;    
+		int red = 0;
+		int green = 0;
+		int blue = 0;
+		for (int row = 0; row < pixels.length; row++)     
+		{     
+								pixel = pixels[row][i];   
+									red += pixel.getRed();
+									green += pixel.getGreen();
+									blue += pixel.getBlue();
+		}  
+		red /= pixels[0].length;
+		green /= pixels[0].length;
+		blue /= pixels[0].length;
+		return String.valueOf(red) + " " + String.valueOf(blue) + " " + String.valueOf(green);
+	}
+	public void keepOnlyGreen()   
+	{     
+
+		 Pixel[][] pixels = this.getPixels2D();
+
+		// Pixel[][] pixels = this.getPixels2D();     
+		Pixel pixel = null;     
+		for (int row = 0; row < pixels.length; row++)     
+		{       for (int col = 0; col < pixels[0].length; col++)       
+			{        
+								pixel = pixels[row][col];         
+		 						pixel.setRed(0);         
+		 						pixel.setBlue(0);       
+			}     
+		}  
+	}
+	public void keepOnlyRed()   
+	{     
+
+		 Pixel[][] pixels = this.getPixels2D();
+
+		// Pixel[][] pixels = this.getPixels2D();     
+		Pixel pixel = null;     
+		for (int row = 0; row < pixels.length; row++)     
+		{       for (int col = 0; col < pixels[0].length; col++)       
+			{        
+								pixel = pixels[row][col];         
+		 						pixel.setBlue(0);         
+		 						pixel.setGreen(0);       
+			}     
+		}  
+	}
+
 	
 	/** Method that mirrors the picture around horizontal line that passes
 	 * through the center of the picture from left to right */
